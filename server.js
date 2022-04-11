@@ -6,20 +6,24 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+
+const path = require("path");
+const htmlPath = path.join(__dirname, "/public");
+app.use(express.static(htmlPath));
+
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "ToDo: link to front" });
-});
+app.get("/", (req, res) => res.sendFile(__dirname + "/public/index.html")); 
 
 require("./routes/quran.routes")(app);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
+const HOST = process.env.HOST;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(`listening on http://${HOST}:${PORT}`);
 });

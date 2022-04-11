@@ -7,8 +7,11 @@ module.exports = app => {
     router.get("/", quran.findAll);
     */
 
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Verse by id
     router.get("/getVerse/:id", quran.getVerse);
+
+    // Retrieve a single Surah by id
+    router.get("/getSurah/:id", quran.getSurah);
 
     // Retrieve three choices from a first Id
     router.get("/getChoices/:id", quran.getChoices);

@@ -4,12 +4,13 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize("sq_quran", SQL_USR, SQL_PWD, {
     dialect: "mysql",
-    host: "localhost"
+    host: "localhost",
+    logging: false
 });
 
 const GET_VERSE = "SELECT Q.ID, Q.SuraID, Q.VerseID, Q.AyahText, S.Surah FROM Quran Q, Surah S WHERE Q.ID = ? AND Q.SuraID = S.SuraID"
-const GET_VERSE_FROM_SPECS = "SELECT Q.ID, Q.SuraID, Q.VerseID, Q.AyahText, S.Surah FROM Quran Q, Surah S WHERE Q.SuraID = %s AND Q.VerseID = %s AND S.SuraID = Q.SuraID"
-
+// const GET_VERSE_FROM_SPECS = "SELECT Q.ID, Q.SuraID, Q.VerseID, Q.AyahText, S.Surah FROM Quran Q, Surah S WHERE Q.SuraID = %s AND Q.VerseID = %s AND S.SuraID = Q.SuraID"
+const GET_SURAH = "SELECT S.Surah FROM Surah S WHERE S.SuraID = ?"
 
 // Find a single Verse with an id
 exports.getVerse = (req, res) => {
@@ -29,6 +30,31 @@ exports.getVerse = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: "Error retrieving Verse with id=" + id
+            });
+        });
+    } catch (error) {
+        console.error('Cannot connect to database:', error);
+    }
+};
+
+// Find a single Sourah by id
+exports.getSurah = (req, res) => {
+    const id = req.params.id;
+
+    try {
+        sequelize.authenticate();
+        sequelize.query(GET_SURAH, { replacements: [id], type: sequelize.QueryTypes.SELECT }).then(([results, metadata]) => {
+            if (results) {
+                res.send(results);
+            } else {
+                res.status(404).send({
+                  message: `Cannot find Surah with id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Surah with id=" + id
             });
         });
     } catch (error) {
@@ -56,7 +82,7 @@ function getRandomSuwar(suraId) {
        if (!res.includes(r))
         res.push(r)
    }
-   return res
+   return res;
 }
 
 exports.getChoices = (req, res) => {
@@ -67,12 +93,16 @@ exports.getChoices = (req, res) => {
         return;
     }
 
-    let choiceIds = getRandomSuwar(rightOneId);
+    let choiceIds = getRandomSuwar(parseInt(rightOneId));
     try {
         sequelize.authenticate();
 
         sequelize.query("SELECT S.Surah FROM Surah S WHERE S.SuraID IN(:choices) ", { replacements: {choices: choiceIds}}).then(([results, metadata]) => {    
             results = results.sort((a, b) => 0.5 - Math.random());
+            if (results.length < 4) {
+                console.log("Error retrieving choices", results);
+                res.status(500).send({message: "Error retrieving choices"});
+            }
             res.send(results);
         }).catch(err => {
             res.status(500).send({
