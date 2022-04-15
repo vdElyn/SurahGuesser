@@ -15,7 +15,6 @@ module.exports = app => {
 
     // Retrieve three choices from a first Id
     router.get("/getChoices/:id", quran.getChoices);
-    
-    
+
     app.use('/api/quran', router);
 };

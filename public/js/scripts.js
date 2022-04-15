@@ -8,8 +8,8 @@ class Verse {
 }
 
 // to Arabic digits
-String.prototype.toArDgt= function() {
-    return this.replace(/\d/g, d =>  '٠١٢٣٤٥٦٧٨٩'[d])
+String.prototype.toArDgt = function () {
+    return this.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
 }
 
 function randInt(min, max) { // min and max included 
@@ -18,14 +18,14 @@ function randInt(min, max) { // min and max included
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-
+// ToDo: passer les requetes en JQuery si c'est plus simple
 async function getVerse(id) {
     try {
         const res = await fetch(`/api/quran/getVerse/${id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
-        
+
         const data = await res.json()
         return data;
     } catch (err) {
@@ -39,7 +39,7 @@ async function getChoices(id) {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
-        
+
         const data = await res.json()
         return data;
     } catch (err) {
@@ -48,7 +48,7 @@ async function getChoices(id) {
 }
 
 
-async function getSurah(id) {    
+async function getSurah(id) {
     try {
         const res = await fetch(`/api/quran/getSurah/${id}`, {
             method: 'GET',
@@ -71,9 +71,9 @@ let score = 0;
 function reloadGame() {
     let percent = "";
     if (round != 1)
-        percent = `(${((score/(round-1))*100).toFixed(1)}%)`;
+        percent = `(${((score / (round - 1)) * 100).toFixed(1)}%)`;
 
-    if (score > 1) 
+    if (score > 1)
         $("#round").html(`Tour ${round} | <b>${score} points</b> ${percent}`);
     else
         $("#round").html(`Tour ${round} | <b>${score} point</b> ${percent}`);
@@ -95,8 +95,8 @@ async function showFailUI(btn, rightSurah) {
     $(btn).addClass("btn-danger");
     $(".btn-answers").off('click')
     for (let i = 0; i < 4; i++) {
-        if ($(`#btn-${i+1}`).text() == rightSurah)
-            $(`#btn-${i+1}`).addClass("btn-success");
+        if ($(`#btn-${i + 1}`).text() == rightSurah)
+            $(`#btn-${i + 1}`).addClass("btn-success");
     }
     round++;
     await delay(500);
@@ -112,27 +112,27 @@ function displayVerse() {
     /* <div class="container px-4 px-lg-5 verse-text text-end">
          <p>Verse + digit</p>
        </div> */
-    data.then(function(result) {
+    data.then(function (result) {
         verse = new Verse(result.ID, result.SuraID, result.VerseID, result.AyahText);
         data = getChoices(verse.surah);
-        
+
         data.then(function (choices) {
-            // Verse
+            // Verse (ToDo: passer en jquery)
             verseSection = document.querySelector("#verse");
             verseSection.innerHTML = "";
             let newDiv = document.createElement("div");
             newDiv.className = "container px-4 px-lg-5 verse-text text-end";
             verseSection.appendChild(newDiv);
-        
+
             let text = document.createElement("p");
             text.appendChild(document.createTextNode(verse.text + " " + verse.ayah.toString().toArDgt()));
             newDiv.appendChild(text);
 
             // Answers
-            for (let i = 0; i < 4; i++) 
-                $((`#btn-${i+1}`)).text(choices[i].Surah);
-            
-            getSurah(verse.surah).then(function(rightSurah) {
+            for (let i = 0; i < 4; i++)
+                $((`#btn-${i + 1}`)).text(choices[i].Surah);
+
+            getSurah(verse.surah).then(function (rightSurah) {
                 // console.log(rightSurah);
                 $(".btn-answers").on("click", function (event) {
                     let chosenSurah = $(event.target).text();
