@@ -1,11 +1,9 @@
 body {
-    background: 
-        linear-gradient(
-            146.11deg,
+    background:
+        linear-gradient(146.11deg,
             #ebd8b7 20.43%,
-            rgba(255, 255, 255, 0) 79.91%
-            ),
-        linear-gradient(202.81deg, #ebd8b7 38.99%, rgba(255, 255, 255, 0) 85.2%), 
+            rgba(255, 255, 255, 0) 79.91%),
+        linear-gradient(202.81deg, #ebd8b7 38.99%, rgba(255, 255, 255, 0) 85.2%),
         #ebd8b7;
 }
 
@@ -15,10 +13,9 @@ body {
     font-weight: normal;
 }
 
-.verse-text{
-    font-family:Hafs !important;
-    font-size:32px;
-    font-weight: normal; 
-    color: var(--bs-primary); 
+.verse-text {
+    font-family: Hafs !important;
+    font-size: 32px;
+    font-weight: normal;
+    color: var(--bs-primary);
 }
-
