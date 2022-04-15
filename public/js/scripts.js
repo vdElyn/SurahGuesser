@@ -67,6 +67,7 @@ async function getSurah(id) {
 
 let round = 1;
 let score = 0;
+let previousRounds = Array();
 
 function reloadGame() {
     let percent = "";
@@ -78,6 +79,7 @@ function reloadGame() {
     else
         $("#round").html(`Tour ${round} | <b>${score} point</b> ${percent}`);
 
+    displayPreviousRounds();
     displayVerse();
 }
 
@@ -137,8 +139,10 @@ function displayVerse() {
                 $(".btn-answers").on("click", function (event) {
                     let chosenSurah = $(event.target).text();
                     if (chosenSurah == rightSurah.Surah) {
+                        previousRounds.push({ verse: verse, res: 1, sourah: rightSurah.Surah });
                         showSuccessUI(event.target);
                     } else {
+                        previousRounds.push({ verse: verse, res: 0, sourah: rightSurah.Surah });
                         showFailUI(event.target, rightSurah.Surah);
                     }
                 });
@@ -147,6 +151,52 @@ function displayVerse() {
     })
 }
 
+
+function displayPreviousRounds() {
+    console.log("Previous rounds:", previousRounds);
+    $("#previous-rounds").empty();
+
+    if (previousRounds.length == 0) {
+        let title = document.createElement("p");
+        title.className = "text-primary fs-3 fw-bold";
+        title.innerText = "Clique sur l'une des sourates pour commencer à jouer.";
+        $("#previous-rounds").append(title);
+        return;
+    }
+    // <p class="text-primary fs-3 fw-bold">Correction des tours précédents</p>
+    let title = document.createElement("p");
+    title.className = "text-primary fs-3 fw-bold";
+    title.innerText = "Correction des tours précédents";
+    $("#previous-rounds").append(title);
+
+    /* <div class="container d-grid-20-80 px-4 px-lg-5 ">
+            <p class="text-primary fs-4 text-start fw-bold">
+                <i class="fa-solid fa-circle-check"></i> Tour 1
+            </p>
+            <p class="verse-text fs-2 text-end">ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ١ – الفَاتِحَة</p>
+        </div> */
+
+    for (let i = previousRounds.length - 1; i >= 0; i--) {
+
+        let verseDiv = document.createElement("div");
+        verseDiv.className = "container d-grid-30-70 px-4 px-lg-5";
+        $("#previous-rounds").append(verseDiv);
+
+        let turnText = document.createElement("p");
+        turnText.className = "text-primary fs-4 text-start fw-bold";
+        if (previousRounds[i].res == 1)
+            turnText.innerHTML = `<i class="fa-solid fa-circle-check"></i> Tour ${i + 1}`;
+        else
+            turnText.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Tour ${i + 1}`;
+        verseDiv.appendChild(turnText);
+
+        let verseText = document.createElement("p");
+        verseText.className = "verse-text fs-4 text-end";
+        let verse = previousRounds[i].verse;
+        verseText.innerHTML = verse.text + " " + verse.ayah.toString().toArDgt() + " – " + previousRounds[i].sourah;
+        verseDiv.appendChild(verseText);
+    }
+}
 
 // $(document).on("ready", (function () {
 window.addEventListener('DOMContentLoaded', event => {

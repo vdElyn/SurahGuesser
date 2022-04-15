@@ -5098,8 +5098,8 @@ fieldset:disabled .btn {
 
 .navbar-light .navbar-nav .show>.nav-link,
 .navbar-light .navbar-nav .nav-link.active {
-  /* color: rgba(0, 0, 0, 0.9); */
-  color: var(--bs-pink);
+  color: rgba(0, 0, 0, 0.9);
+  /* color: var(--bs-pink); */
 }
 
 .navbar-light .navbar-toggler {
@@ -7677,6 +7677,11 @@ fieldset:disabled .btn {
 .d-grid-50-50 {
   display: grid !important;
   grid-template-columns: 50% 50%;
+}
+
+.d-grid-30-70 {
+  display: grid !important;
+  grid-template-columns: 30% 70%;
 }
 
 

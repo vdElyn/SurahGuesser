@@ -19,3 +19,16 @@ body {
     font-weight: normal;
     color: var(--bs-primary);
 }
+
+.fa-circle-check {
+    color: #198754;
+}
+
+.fa-circle-xmark {
+    color: #dc3545;
+}
+
+.bottom-align-text {
+    position: absolute;
+    vertical-align: bottom
+}
