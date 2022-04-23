@@ -12458,7 +12458,7 @@ footer.footer .social-link:hover {
   display: table;
   width: 100%;
   height: auto;
-  padding-top: 8rem;
+  padding-top: 4rem;
   padding-bottom: 8rem;
   background: linear-gradient(90deg, rgba(227, 185, 155, 0.3) 0%, rgba(227, 185, 155, 0.3) 100%), url("../assets/desert-bg.jpg");
   background-position: center center;

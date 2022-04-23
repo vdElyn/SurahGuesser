@@ -24,7 +24,7 @@
 <body id="page-top">
     <!-- Responsive navbar-->
     <!-- Navbar from: https://pinegrow.com/tutorials/how-to-create-a-language-dropdown-with-flags-in-bootstrap-4/ -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <!-- ToDo: sticky navbar même sur les autres sections -->
         <!-- Navbar-brand différent en fonction de la taille d'écran: https://stackoverflow.com/questions/35351353/missing-visible-and-hidden-in-bootstrap-v4 -->
         <a class="navbar-brand d-block d-sm-none" href="#"><img alt="Logo xs" src="assets/favicon.ico" width="90"
@@ -58,13 +58,13 @@
         <div class="collapse navbar-collapse" id="navbarToggler77">
             <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-5">
                 <li class="nav-item">
-                    <a class="nav-link " href="#">Ma partie</a>
+                    <a class="nav-link " href="#hSolo">Ma partie</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#previous">Tours précédents</a>
+                    <a class="nav-link " href="#hCreate">Créer une room</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#leaderboard">Classement</a>
+                    <a class="nav-link " href="#hJoin">Rejoindre une room</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -104,83 +104,123 @@
     <!-- Header-->
     <header class="masthead d-flex flex-column align-items-center">
 
-        <!-- ToDo: d'abord menu pour lancer une partie solo -->
-        <!-- il faut qu'une seule ligne de la grille de rooms soit sur le désert-->
-
-        <div class="container px-4 px-lg-5 w-100">
-            <!-- w-75 -->
-
-            <!-- <div id="question" class="container d-grid-50-50 px-4 px-lg-5">
-                <p class="text-primary fs-3 text-start">De quelle <b>Sourah</b> est tiré ce <b>verset</b> ?</p>
-                <p class="text-primary fs-3 text-end" id="round">Tour 2 | <b>1 point</b> (50.0%)</p>
-            </div> -->
-
-            <!-- <section id="verse" class="content-section">
-            </section> -->
+        <div class="container px-4 px-lg-5">
 
             <div class="container w-75">
-                <!-- <form> -->
-                    <div class="form-group">
-                      <label for="roomName">Nom de la room</label>
-                      <input type="text" class="form-control" id="roomName" aria-describedby="roomNameHelp" placeholder="Entrer le nom de la room">
-                      <!-- <small id="roomNameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                      <small id="roomNameError" class="form-text text-danger invisible">A room name is required to create a room.</small>
-                    </div>
-                    <!-- <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div> -->
-                    <button id="createRoom" class="btn btn-primary">Créer une room publique</button>
-                <!-- </form> -->
-            </div>
 
-            <div id="rooms-container" class="container mt-5">
-                <div id="rooms-container-row" class="row">
+                <!-- Titre -->
+                <!-- <h2 class="text-primary fw-bold text-center pb-3">Sāhib-ul-Qur'an</h2> -->
 
-                    <div id="room-1" class="col-md-4 room-card">
-                        <div class="card p-3">
-                            <div class="d-flex flex-row mb-3">
-                                <!-- <img src="https://i.imgur.com/ccMhxvC.png" width="70"> -->
-                                <div class="d-flex flex-column ml-2">
-                                    <span class="fw-bold fs-4">Room 1</span>
-                                    <span class="text-black-50">Pseudo du créateur</span>
-                                </div>
-                            </div>
-                            <!-- <h6>Get more context on your users with stripe data inside our platform.</h6> -->
-                            <div class="d-flex justify-content-between mt-3">
-                                <span>4 joueurs</span>
-                                <span class="text-primary">Rejoindre&nbsp;<i class="fa fa-angle-right"></i></span>
-                            </div>
+                <!-- Mode solo -->
+                <h3 id="hSolo" class="text-primary fw-bold text-start">🌱 Entraîne toi en solo <a class="fw-normal fs-5 fst-italic text-muted">(version minimale)</a></h3>
+                <div class="container pb-3 d-none d-lg-block">
+                    <div id="verse">
+                        <div class="container px-4 px-lg-5 verse-text text-end">
+                        <p>ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ١</p>
                         </div>
                     </div>
-
+        
+                    <div id="answers" class="container px-lg-5 text-end">
+                        <a class="btn btn-answers btn-secondary fs-5" id="btn-1">1st answer</a>
+                        <a class="btn btn-answers btn-secondary fs-5" id="btn-2">2nd answer</a>
+                        <a class="btn btn-answers btn-secondary fs-5" id="btn-3">3rd answer</a>
+                        <a class="btn btn-answers btn-secondary fs-5" id="btn-4">4th answer</a>
+                    </div>
                 </div>
+                <div class="text-center pt-3">
+                    <button id="goSolo" class="btn-xl btn-primary center px-4">Accéder au mode solo complet <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                </div>
+
+                <!-- Create room -->
+                <h3 id="hCreate" class="text-primary fw-bold text-start py-3">💫 Crée ta propre room</h3>
+
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-4">
+                            <label class="sr-only" for="inlineFormInput">Name</label>
+                            <input id="roomName" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Entrer le nom de la room">
+                        </div>
+                      
+                        <div class="col-auto">
+                            <label class="sr-only" for="inlineFormInputGroup">Pseudo</label>
+                            <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">@</div>
+                            </div>
+                            <input id="nicknameCreate" type="text" class="form-control" placeholder="Pseudo">
+                            </div>
+                        </div>
+                    
+                        <div class="col-auto">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" role="switch" id="privateRoomSwitch" />
+                                <label class="form-check-label" for="privateRoomSwitch">🔒 Room privée</label>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <button id="createRoom" type="submit" class="btn btn-primary mb-2 px-4">Créer ma room</button>
+                        </div>
+                    </div>
+                    <!-- <small id="helpPlaceholder" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                    <small id="errorPlaceHolder" class="form-text text-danger fw-bold invisible">A room name is required to create a room.</small>
+                </form>
+            
+            
+            
+                <!-- Join room -->
+                <h3 id="hJoin" class="text-primary fw-bold text-start pt-3">✨ Ou rejoins l'une des rooms actives</h3>
+                <!-- <h6 class="text-muted">We'll never share your email with anyone else.</h6> -->
+                
+                <!-- ToDo: prendre en charge Form pour code de partie -->
+                <form class="form-inline justify-content-center">
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <h5 class="text-secondary fw-bold text-start">🔒 Code de partie privée : </h3>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2">
+                            <div class="input-group-prepend"><div class="input-group-text">#</div></div>
+                            <input id="roomCode" type="text" class="form-control" placeholder="Code">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button id="joinPrivateRoom" type="submit" class="btn btn-primary mb-2 px-4">Rejoindre</button>
+                        </div>
+                    </div>
+                    <small id="errorJoiningPrivate" class="form-text text-danger fw-bold invisible">Le code entré ne correspond à aucune room active.</small>
+                </form>
+
+
+                <div id="rooms-container" class="container">
+                    <div id="rooms-container-row" class="row">
+
+                        <div id="room-1" class="col-md-4 room-card">
+                            <div class="card p-3">
+                                <div class="d-flex flex-row mb-3">
+                                    <!-- <img src="https://i.imgur.com/ccMhxvC.png" width="70"> -->
+                                    <div class="d-flex flex-column ml-2">
+                                        <span class="fw-bold fs-4">Room 1</span>
+                                        <span class="text-black-50">Pseudo du créateur</span>
+                                    </div>
+                                </div>
+                                <!-- <h6>Get more context on your users with stripe data inside our platform.</h6> -->
+                                <div class="d-flex justify-content-between mt-3">
+                                    <span>4 joueurs</span>
+                                    <span class="text-primary">Rejoindre&nbsp;<i class="fa fa-angle-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-
-
         </div>
 
     </header>
 
-    <!-- Page content-->
-    <div class="container" id="previous">
-        <div class="text-center mt-5" id="previous-rounds">
-
-            <!-- <p class="text-primary fs-2 fw-bold">Correction des tours précédents</p> -->
-
-            <!-- <div class="container d-grid-20-80 px-4 px-lg-5 ">
-                <p class="text-primary fs-4 text-start fw-bold">
-                    <i class="fa-solid fa-circle-check"></i> Tour 1
-                </p>
-                <p class="verse-text fs-2 text-end">ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ١ – الفَاتِحَة</p>
-            </div> -->
-
-        </div>
-    </div>
+    
 
     <!-- Section d'après -->
     <!-- <section class="content-section bg-light" id="leaderboard">
@@ -230,6 +270,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Core theme JS-->
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="js/app.js"></script>
 </body>
 

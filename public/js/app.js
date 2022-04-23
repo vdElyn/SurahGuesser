@@ -2,16 +2,25 @@ let socket = io();
 let nick = "Elyn";
 
 $("#createRoom").on("click", function (event) {
-    console.log("createRoomPressed");
-    $("#roomNameError").addClass("invisible");
+    event.preventDefault();
+    $("#errorPlaceHolder").addClass("invisible");
 
+    // Afficher le message d'erreur
     if ($("#roomName").val().length == 0) {
-        $("#roomNameError").removeClass("invisible");
+        $("#errorPlaceHolder").text("A room name is required to create a room.");
+        $("#errorPlaceHolder").removeClass("invisible");
+        return;
+    }
+
+    // Afficher le message d'erreur
+    if ($("#nicknameCreate").val().length == 0) {
+        $("#errorPlaceHolder").text("A nickname is required to create a room.");
+        $("#errorPlaceHolder").removeClass("invisible");
         return;
     }
 
     console.log($("#roomName").val());
-    socket.emit('createRoom', {name:$("#roomName").val(), host:nick});
+    socket.emit('createRoom', {name:$("#roomName").val(), host:$("#nicknameCreate").val()});
 });
 
 /* JS Functions */
@@ -36,7 +45,7 @@ function renderRooms()  {
     $('#rooms-container-row').empty();
     if (availableRooms == 0) {
         $('#rooms-container-row').html(`
-            <p class="text-primary fs-3 text-center">Aucune room active pour le moment.</p>
+            <p class="text-muted fs-5 text-center pt-3">Aucune room active pour le moment.</p>
         `);
         return;
     }
