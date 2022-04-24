@@ -128,6 +128,7 @@
                     </div>
                 </div>
                 <div class="text-center pt-3">
+                    <!-- ToDo: activer mode solo -->
                     <button id="goSolo" class="btn-xl btn-primary center px-4">Accéder au mode solo complet <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
                 </div>
 
@@ -171,6 +172,41 @@
                 <!-- Join room -->
                 <h3 id="hJoin" class="text-primary fw-bold text-start pt-3">✨ Ou rejoins l'une des rooms actives</h3>
                 <!-- <h6 class="text-muted">We'll never share your email with anyone else.</h6> -->
+
+                <div class="modal fade" id="joinRoomPopup" tabindex="-1" role="dialog" aria-labelledby="joinRoomPopupLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="joinRoomPopupLabel">New message</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-row align-items-center">
+                                    <div class="col-auto">
+                                        <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">@</div>
+                                        </div>
+                                        <input id="joinRoomNick" type="text" class="form-control" placeholder="Pseudo">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button id="confirmJoinRoom" type="button" class="btn btn-primary">Rejoindre</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                                <small id="JoinRoomError" class="form-text text-danger fw-bold invisible">A room name is required to create a room.</small>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- ToDo: prendre en charge Form pour code de partie -->
                 <form class="form-inline justify-content-center">
@@ -191,7 +227,7 @@
                     <small id="errorJoiningPrivate" class="form-text text-danger fw-bold invisible">Le code entré ne correspond à aucune room active.</small>
                 </form>
 
-
+                <!-- ToDo: arranger affichage des cards -->
                 <div id="rooms-container" class="container">
                     <div id="rooms-container-row" class="row">
 
