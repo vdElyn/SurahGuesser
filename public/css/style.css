@@ -20,6 +20,11 @@ body {
     color: var(--bs-primary);
 }
 
+.verse-text-min {
+    max-height: 160px;
+    overflow: auto;
+}
+
 .fa-circle-check {
     color: #198754;
 }

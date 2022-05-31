@@ -1,8 +1,12 @@
-let socket = io();
+const socket = io();
 let nick = "undefined";
 
-$("#createRoom").on("click", function (event) {
-    event.preventDefault();
+$("#goSolo").on("click", function (e) {
+    window.open("/solo", "_blank");
+});
+
+$("#createRoom").on("click", function (e) {
+    e.preventDefault();
     $("#errorPlaceHolder").addClass("invisible");
 
     // Errors check: blank or too long roomname
@@ -18,8 +22,7 @@ $("#createRoom").on("click", function (event) {
         $("#errorPlaceHolder").removeClass("invisible");
         return;
     }
-    
-    socket.emit('createRoom', {name:$("#roomName").val(), host:$("#nicknameCreate").val()});
+    socket.emit('createRoom', {name:$("#roomName").val(), host:$("#nicknameCreate").val(), private: $("#privateRoomSwitch").is(":checked")});
     $("#roomName").val("");
     $("#nicknameCreate").val("");
 });
@@ -79,7 +82,6 @@ function renderRooms()  {
                     break;
                 }
             }
-            
 
             $('#joinRoomPopup').modal('show');
             $("#JoinRoomError").addClass("invisible");
@@ -88,14 +90,16 @@ function renderRooms()  {
 
             $('#confirmJoinRoom').on("click", function (e) {
                 e.preventDefault();
-
+            
+                console.log("here");
+            
                 // Check si l'utilisateur a entré un pseudo
                 if ($("#joinRoomNick").val().length == 0 || $("#joinRoomNick").val().length > 15) {
                     $("#JoinRoomError").text("Un pseudo de moins de 15 caractères est requis pour rejoindre une room.");
                     $("#JoinRoomError").removeClass("invisible");
                     return;
                 }
-
+            
                 // Check si le pseudo n'est pas déjà dans la room
                 if (activeRoom.players.includes($("#joinRoomNick").val())) {
                     $("#JoinRoomError").text("Ce pseudo est déjà utilisé dans la room.");
@@ -106,11 +110,14 @@ function renderRooms()  {
                 $('#joinRoomPopup').modal('hide');
                 socket.emit('joinRoom', {nick:$('#joinRoomNick').val(), roomId:roomId});
                 $("#joinRoomNick").val("");
+                $('#confirmJoinRoom').off('click');
                 // ToDo: Rediriger vers la room avec affichage des joueurs et attente que l'host lance la game
             });
         });
     });
 }
+
+
 
 renderRooms();
 

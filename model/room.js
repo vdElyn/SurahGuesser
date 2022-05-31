@@ -6,6 +6,7 @@ const roomSchema = new mongoose.Schema({
     created: { type: Date, default: Date.now }, // Date de création de la room
     name: { type: String },
     host: { type: String },
+    private: { type: Boolean, default: false },
     players: [String]
 }, {
     versionKey: false

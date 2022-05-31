@@ -12460,7 +12460,7 @@ footer.footer .social-link:hover {
   height: auto;
   padding-top: 4rem;
   padding-bottom: 8rem;
-  background: linear-gradient(90deg, rgba(227, 185, 155, 0.3) 0%, rgba(227, 185, 155, 0.3) 100%), url("../assets/desert-bg.jpg");
+  background: linear-gradient(90deg, rgba(227, 185, 155, 0.6) 0%, rgba(227, 185, 155, 0.6) 100%), url("../assets/desert-bg.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -12475,7 +12475,7 @@ footer.footer .social-link:hover {
 
 @media (min-width: 992px) {
   .masthead {
-    height: 100vh;
+    height: 90vh;
   }
 
   .masthead h1,

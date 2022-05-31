@@ -115,8 +115,8 @@
                 <h3 id="hSolo" class="text-primary fw-bold text-start">🌱 Entraîne toi en solo <a class="fw-normal fs-5 fst-italic text-muted">(version minimale)</a></h3>
                 <div class="container pb-3 d-none d-lg-block">
                     <div id="verse">
-                        <div class="container px-4 px-lg-5 verse-text text-end">
-                        <p>ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ١</p>
+                        <div class="container px-4 px-lg-5 verse-text verse-text-min text-end">
+                            <p>ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ١</p>
                         </div>
                     </div>
         
@@ -128,7 +128,6 @@
                     </div>
                 </div>
                 <div class="text-center pt-3">
-                    <!-- ToDo: activer mode solo -->
                     <button id="goSolo" class="btn-xl btn-primary center px-4">Accéder au mode solo complet <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
                 </div>
 
@@ -139,7 +138,7 @@
                     <div class="form-row align-items-center">
                         <div class="col-sm-4">
                             <label class="sr-only" for="inlineFormInput">Name</label>
-                            <input id="roomName" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Entrer le nom de la room">
+                            <input id="roomName" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Nom de la room" required >
                         </div>
                       
                         <div class="col-auto">
@@ -148,13 +147,13 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">@</div>
                             </div>
-                            <input id="nicknameCreate" type="text" class="form-control" placeholder="Pseudo">
+                            <input id="nicknameCreate" type="text" class="form-control" placeholder="Pseudo" required >
                             </div>
                         </div>
                     
                         <div class="col-auto">
                             <div class="form-check form-switch mb-2">
-                                <input class="form-check-input" type="checkbox" role="switch" id="privateRoomSwitch" />
+                                <input id="privateRoomSwitch" class="form-check-input" type="checkbox" role="switch" />
                                 <label class="form-check-label" for="privateRoomSwitch">🔒 Room privée</label>
                             </div>
                         </div>
@@ -191,11 +190,11 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">@</div>
                                         </div>
-                                        <input id="joinRoomNick" type="text" class="form-control" placeholder="Pseudo">
+                                        <input id="joinRoomNick" type="text" class="form-control" placeholder="Pseudo" required >
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <button id="confirmJoinRoom" type="button" class="btn btn-primary">Rejoindre</button>
+                                        <button id="confirmJoinRoom" type="submit" class="btn btn-primary">Rejoindre</button>
                                     </div>
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -227,8 +226,18 @@
                     <small id="errorJoiningPrivate" class="form-text text-danger fw-bold invisible">Le code entré ne correspond à aucune room active.</small>
                 </form>
 
-                <!-- ToDo: arranger affichage des cards -->
-                <div id="rooms-container" class="container">
+
+            </div>
+        </div>
+
+    </header>
+
+    <section class="" id="rooms">
+        <div class="container px-4 px-lg-5">
+            <div class="container w-75">
+
+                 <!-- ToDo: arranger affichage des cards -->
+                 <div id="rooms-container" class="container">
                     <div id="rooms-container-row" class="row">
 
                         <div id="room-1" class="col-md-4 room-card">
@@ -253,8 +262,7 @@
 
             </div>
         </div>
-
-    </header>
+    </section>
 
     
 

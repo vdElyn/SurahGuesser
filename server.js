@@ -25,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 // app.get("/", (req, res) => res.sendFile(__dirname + "/public/index.html"));
 app.get("/", (req, res) => res.sendFile(__dirname + "/public/home.html"));
 
+app.get("/solo", (req, res) => res.sendFile(__dirname + "/public/solo.html"));
+
 require("./routes/quran.routes")(app);
 
 let server = http.createServer(app);
@@ -50,14 +52,21 @@ io.on('connection', (socket) => {
   console.log('A user just connected.');
   sendRooms(socket);
 
+  // ToDo: retrouver l'utilisateur par son Cookie
+  // var cookies = cookie.parse(socket.handshake.headers.cookie);
+  // const user = await User.findOne({ token: cookies.jwt });
+
   socket.on('createRoom', async (data) => {
     console.log("CreateRoom received");
     
     let roomId = await generateRoomId(4);
+    socket.join(`room-${roomId}`);
+
     new RoomModel({
       id: roomId, 
       name: data.name,
       host: data.host, 
+      private: data.private,
       players: [data.host]
     }).save().then( () => {
       sendRooms(socket);
@@ -69,7 +78,7 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', async (data) => {
     // Routine joinRoom (ajouter l'user à la DB)
     console.log(`${data.nick} rejoint la room ${data.roomId}`);
-    
+    socket.join(`room-${data.roomId}`);
     // Get la room en question
     const joinedRoom = await RoomModel.findOne({ id: data.roomId });
     if (!joinedRoom) {
@@ -78,8 +87,14 @@ io.on('connection', (socket) => {
     }
     await RoomModel.updateOne({ id: data.roomId }, {$push: { players: data.nick }});
 
+    // ToDo: conserver l'utilisateur par cookie pour retenir son pseudo et les rooms auxquelles il appartient 
+    console.log('Rooms:', socket.rooms);
     // Actualiser la liste des rooms chez les autres clients
     sendRooms(socket);
+  })
+
+  socket.on('startGame', (data) => {
+    // io.to(`room-${data.roomId}.emit()
   })
 
   socket.on('disconnect', () => {
@@ -89,7 +104,7 @@ io.on('connection', (socket) => {
 
 async function sendRooms(socket) {
 
-  await RoomModel.find({})
+  await RoomModel.find({private: false})
     .then(function (rooms) {
       // Tri des rooms par nombre de joueurs
       rooms.sort(function (a, b) {

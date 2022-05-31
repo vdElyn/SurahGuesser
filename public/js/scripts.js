@@ -123,7 +123,7 @@ function displayVerse() {
             verseSection = document.querySelector("#verse");
             verseSection.innerHTML = "";
             let newDiv = document.createElement("div");
-            newDiv.className = "container px-4 px-lg-5 verse-text text-end";
+            newDiv.className = "container px-4 px-lg-5 verse-text verse-text-min text-end";
             verseSection.appendChild(newDiv);
 
             let text = document.createElement("p");
